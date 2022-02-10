@@ -1,4 +1,4 @@
-package main
+package routers
 
 import (
 	"net/http"
@@ -12,7 +12,7 @@ func helloHandler(c *gin.Context) {
 	})
 }
 
-func setupRouter() *gin.Engine {
+func SetupRouter() *gin.Engine {
 	r := gin.Default()
 	r.GET("/topgoer", helloHandler) // http://localhost:8080/topgoer
 	return r
