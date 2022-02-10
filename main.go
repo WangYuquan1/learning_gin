@@ -1,13 +1,29 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"net/http"
+	"strings"
+
+	"github.com/gin-gonic/gin"
+)
 
 func main() {
-	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
+	router := gin.Default()
+	router.GET("/", func(c *gin.Context) {
+		c.String(http.StatusOK, "welcome to Learning Gin")
+	})
+	router.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "pong",
 		})
 	})
-	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+
+	router.GET("/user/:name/*action", func(c *gin.Context) {
+		name := c.Param("name")
+		action := c.Param("action")
+		action = strings.Trim(action, "/")
+		c.String(http.StatusOK, name+" is "+action) // http://localhost:8080/user/wang/drinking
+	})
+
+	router.Run() // listen and serve on 0.0.0.0:8080 (for browser "localhost:8080")
 }
