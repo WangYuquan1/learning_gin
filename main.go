@@ -38,5 +38,33 @@ func main() {
 		c.String(http.StatusOK, fmt.Sprintf("username:%s,password:%s,type:%s", username, password, types))
 	})
 
+	/* ルーターグループ
+	検証URL：
+	curl http://localhost:8080/v1/login?name=wang
+	curl http://localhost:8080/v1/submit -X POST
+	curl http://localhost:8080/v2/submit -X POST
+	*/
+	v1 := router.Group("/v1")
+	{
+		v1.GET("/login", login)
+		v1.GET("/submit", submit)
+	}
+
+	v2 := router.Group("/v2")
+	{
+		v2.POST("/login", login)
+		v2.POST("/submit", submit)
+	}
+
 	router.Run() // listen and serve on 0.0.0.0:8080 (for browser "localhost:8080")
+}
+
+func login(c *gin.Context) {
+	name := c.DefaultQuery("name", "jack")
+	c.String(http.StatusOK, fmt.Sprintf("hello %s\n", name))
+}
+
+func submit(c *gin.Context) {
+	name := c.DefaultQuery("name", "lily")
+	c.String(http.StatusOK, fmt.Sprintf("hello %s\n", name))
 }
