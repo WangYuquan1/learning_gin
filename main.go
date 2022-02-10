@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -23,6 +24,11 @@ func main() {
 		action := c.Param("action")
 		action = strings.Trim(action, "/")
 		c.String(http.StatusOK, name+" is "+action) // http://localhost:8080/user/wang/drinking
+	})
+
+	router.GET("/user", func(c *gin.Context) {
+		name := c.DefaultQuery("name", "gest")
+		c.String(http.StatusOK, fmt.Sprintf("hello %s", name)) //http://localhost:8080/user?name=wang
 	})
 
 	router.Run() // listen and serve on 0.0.0.0:8080 (for browser "localhost:8080")
