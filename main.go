@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"learning_gin/routers"
 
 	"github.com/gin-gonic/gin"
 )
@@ -59,8 +58,7 @@ func main() {
 	// }
 
 	r := gin.Default()
-	routers.BlogShop(r)
-	routers.LoadShop(r)
+	r.POST("loginJSON", loginJSON)
 	if err := r.Run(); err != nil {
 		fmt.Printf("startup service failed, err:%v\n", err)
 	}
