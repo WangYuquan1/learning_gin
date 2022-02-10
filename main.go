@@ -31,5 +31,12 @@ func main() {
 		c.String(http.StatusOK, fmt.Sprintf("hello %s", name)) //http://localhost:8080/user?name=wang
 	})
 
+	router.POST("/form", func(c *gin.Context) {
+		types := c.DefaultPostForm("type", "post")
+		username := c.PostForm("username")
+		password := c.PostForm("password")
+		c.String(http.StatusOK, fmt.Sprintf("username:%s,password:%s,type:%s", username, password, types))
+	})
+
 	router.Run() // listen and serve on 0.0.0.0:8080 (for browser "localhost:8080")
 }
