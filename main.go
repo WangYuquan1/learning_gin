@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"learning_gin/routers"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -55,7 +57,10 @@ func main() {
 
 	// router.Run() // listen and serve on 0.0.0.0:8080 (for browser "localhost:8080")
 	// }
-	r := routers.SetupRouter()
+
+	r := gin.Default()
+	routers.BlogShop(r)
+	routers.LoadShop(r)
 	if err := r.Run(); err != nil {
 		fmt.Printf("startup service failed, err:%v\n", err)
 	}
